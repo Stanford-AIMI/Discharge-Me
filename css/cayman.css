@@ -7,7 +7,7 @@ body {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  color: #606c71; }
+  color: #404649; }
 
 a {
   color: #1e6bb8;
@@ -52,14 +52,15 @@ a {
 .page-header {
   color: #fff;
   text-align: center;
-  background-color: #159957;
-  background-image: linear-gradient(120deg, #155799, #159957); }
+  background-color: #ffffff;
+  background-image: linear-gradient(45deg, rgba(255,255,255,1) 0%, rgba(140,21,21,1) 10%, rgb(150, 0, 0) 50%, rgba(140,21,21,1) 90%, rgba(255,255,255,1) 100%);
+}
   @media screen and (min-width: 64em) {
     .page-header {
-      padding: 5rem 6rem; } }
+      padding: 3rem 6rem; } }
   @media screen and (min-width: 42em) and (max-width: 64em) {
     .page-header {
-      padding: 3rem 4rem; } }
+      padding: 2rem 4rem; } }
   @media screen and (max-width: 42em) {
     .page-header {
       padding: 2rem 1rem; } }
@@ -98,12 +99,12 @@ a {
   @media screen and (min-width: 64em) {
     .main-content {
       max-width: 64rem;
-      padding: 2rem 6rem;
+      padding: 2rem 3rem;
       margin: 0 auto;
       font-size: 1.1rem; } }
   @media screen and (min-width: 42em) and (max-width: 64em) {
     .main-content {
-      padding: 2rem 4rem;
+      padding: 2rem 2rem;
       font-size: 1.1rem; } }
   @media screen and (max-width: 42em) {
     .main-content {
@@ -120,7 +121,7 @@ a {
     margin-top: 2rem;
     margin-bottom: 1rem;
     font-weight: normal;
-    color: #159957; }
+    color: #8C1515; }
   .main-content p {
     margin-bottom: 1em; }
   .main-content code {
