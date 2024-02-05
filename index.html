@@ -41,7 +41,7 @@
         <h3>
           <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>1. Task Overview</b></h3>
 
-          <p>Participants are given a dataset based on MIMIC-IV which includes 114,132 admissions from the Emergency Department (ED), split into training, validation, and test sets. Each admission includes chief complaints and diagnosis codes (either ICD-9 or ICD-10) documented by the ED, at least one full radiology report, and a discharge summary with both "Brief Hospital Course" and "Discharge Instructions" sections. The goal is to generate these two critical sections in discharge summaries.</p>
+          <p>Participants are given a dataset based on MIMIC-IV which includes 114,024 admissions from the Emergency Department (ED), split into training, validation, and test sets. Each admission includes chief complaints and diagnosis codes (either ICD-9 or ICD-10) documented by the ED, at least one full radiology report, and a discharge summary with both "Brief Hospital Course" and "Discharge Instructions" sections. The goal is to generate these two critical sections in discharge summaries.</p>
           
           <h4>
             <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>1.1 Rules</b></h4>
@@ -145,56 +145,48 @@
               <tbody>
                 <tr>
                   <td class="tg-8zwo">Admissions</td>
-                  <td class="tg-baqh">114,132</td>
-                  <td class="tg-baqh">71,903</td>
-                  <td class="tg-baqh">15,408</td>
-                  <td class="tg-baqh">15,408</td>
-                  <td class="tg-baqh">11,413</td>
+                  <td class="tg-baqh">114,024</td>
+                  <td class="tg-baqh">71,835</td>
+                  <td class="tg-baqh">15,394</td>
+                  <td class="tg-baqh">15,393</td>
+                  <td class="tg-baqh">11,402</td>
                 </tr>
                 <tr>
                   <td class="tg-8zwo">Discharge Summaries</td>
-                  <td class="tg-baqh">114,132</td>
-                  <td class="tg-baqh">71,903</td>
-                  <td class="tg-baqh">15,408</td>
-                  <td class="tg-baqh">15,408</td>
-                  <td class="tg-baqh">11,413</td>
+                  <td class="tg-baqh">114,024</td>
+                  <td class="tg-baqh">71,835</td>
+                  <td class="tg-baqh">15,394</td>
+                  <td class="tg-baqh">15,393</td>
+                  <td class="tg-baqh">11,402</td>
                 </tr>
                 <tr>
                   <td class="tg-8zwo">Radiology Reports</td>
-                  <td class="tg-baqh">449,847</td>
-                  <td class="tg-baqh">284,230</td>
-                  <td class="tg-baqh">59,822</td>
-                  <td class="tg-baqh">60,945</td>
-                  <td class="tg-baqh">44,850</td>
+                  <td class="tg-baqh">449,603</td>
+                  <td class="tg-baqh">284,402</td>
+                  <td class="tg-baqh">60,189</td>
+                  <td class="tg-baqh">60,722</td>
+                  <td class="tg-baqh">44,290</td>
                 </tr>
                 <tr>
-                  <td class="tg-8zwo">ED Stays</td>
-                  <td class="tg-baqh">114,378</td>
-                  <td class="tg-baqh">72,077</td>
-                  <td class="tg-baqh">15,429</td>
-                  <td class="tg-baqh">15,440</td>
-                  <td class="tg-baqh">11,432</td>
-                </tr>
-                <tr>
-                  <td class="tg-8zwo">ED Chief Complaints</td>
-                  <td class="tg-baqh">114,378</td>
-                  <td class="tg-baqh">72,077</td>
-                  <td class="tg-baqh">15,429</td>
-                  <td class="tg-baqh">15,440</td>
-                  <td class="tg-baqh">11,432</td>
+                  <td class="tg-8zwo">ED Stays & Chief Complaints</td>
+                  <td class="tg-baqh">114,270</td>
+                  <td class="tg-baqh">71,994</td>
+                  <td class="tg-baqh">15,428</td>
+                  <td class="tg-baqh">15,422</td>
+                  <td class="tg-baqh">11,426</td>
                 </tr>
                 <tr>
                   <td class="tg-8zwo">ED Diagnoses</td>
-                  <td class="tg-baqh">228,913</td>
-                  <td class="tg-baqh">143,972</td>
-                  <td class="tg-baqh">30,955</td>
-                  <td class="tg-baqh">31,008</td>
-                  <td class="tg-baqh">22,978</td>
+                  <td class="tg-baqh">228,690</td>
+                  <td class="tg-baqh">144,528</td>
+                  <td class="tg-baqh">30,553</td>
+                  <td class="tg-baqh">30,911</td>
+                  <td class="tg-baqh">22,698</td>
                 </tr>
               </tbody>
               </table>
 
-              <p style="padding-top: 20px;">Additionally, the mean length of the "Brief Hospital Course" section is 325.70 words, and the men length of the "Discharge Instructions" section is 193.51 words, for the entire dataset.</p>
+              <p style="padding-top: 20px;">Additionally, the mean length of the "Brief Hospital Course" section is 325.77 words, and the mean length of the "Discharge Instructions" section is 193.69 words, for the entire dataset.</p>
             
           <h4>
             <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>2.3 Dataset Schemas</b></h4>
