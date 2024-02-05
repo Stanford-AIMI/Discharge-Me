@@ -2,41 +2,201 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>Cayman</title>
+    <title>AutoClin24</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#ed1c24">
     <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/cayman.css">
+    <style>
+      .col {
+        text-align: center;
+      }
+      .multiline-heading {
+        white-space: pre-line;
+      }
+      .row{
+        padding-bottom: 30px;
+      }
+    </style>
   </head>
   <body>
     <section class="page-header">
-      <h1 class="project-name">AutoClin24</h1>
-      <h2 class="project-tagline">BioNLP ACL'24 Challenge on Streamlining Large Scale Disease Classification and Clinical Documentation</h2>
-      <a href="#" class="btn">View on GitHub</a>
-      <a href="#" class="btn">Download data.zip</a>
-      <a href="#" class="btn">Download data.tar.gz</a>
+      <h1 class="project-name" style="padding-bottom: 20px;">AutoClin24</h1>
+      <h2 class="project-tagline"><b>BioNLP ACL'24 Shared Task on Streamlining Discharge Documentation</b></h2>
+      <!-- <a href="#" class="btn">View on GitHub</a> -->
+      <a href="https://www.codabench.org/competitions/1980/" class="btn">View Challenge on Codabench</a>
+      <!-- <a href="#" class="btn">Download data.tar.gz</a> -->
     </section>
 
     <section class="main-content">
-      <h1>
-        <a id="user-content-header-1" class="anchor" href="#header-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Task A: Large Scale Disease Classification</h1>
+      <h2>
+        <a id="user-content-header-1" class="anchor" href="#header-1" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>Generating Discharge Summary Sections</b></h2>
   
-        <p>Disease Classification is the task of assigning diagnoses to electronic health records and clinical free-text notes. Medical professionals often have to assign diagnostic codes representing such diagnoses to health records for various purposes, such as for hospital billing or for tracking treatments. Automating this process can help reduce clinician burnout and alleviate administrative burdens on hospital staff. Hence, we present this shared task on automatically classifying diseases using radiology reports and discharge summaries. </p>
+        <p>
+          The primary objective of this task is to reduce the time and effort clinicians spend on writing detailed notes in the electronic health record (EHR). Clinicians play a crucial role in documenting patient progress in discharge summaries, but the creation of concise yet comprehensive hospital course summaries and discharge instructions often demands a significant amount of time, especially since these sections cannot be readily copied from prior notes. This can lead to clinician burnout and operational inefficiencies within hospital workflows. By streamlining the generation of these sections, we can not only enhance the accuracy and completeness of clinical documentation but also significantly reduce the time clinicians spend on administrative tasks, ultimately improving patient care quality.
+        </p>
 
-        <h2>
-          <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>A.1 Task Description</h2>
+        <h3>
+          <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>1. Task Overview</b></h3>
 
-          <p>Participants are given a dataset based on MIMIC-IV which includes 265,218 valid admissions (samples will be pre-split into training, validation, and hidden test sets). A valid admission is defined as an admission where the patient has one (1) primary diagnosis ICD code (either ICD-9 or ICD-10), one (1) discharge summary, and at least one (1) radiology report. Due to the high number of unique ICD codes across the two vocabulary versions present in this dataset, we have grouped the primary diagnosis ICD codes into PheCodes using the ICD-to-Phecode maps provided by PheWAS (code for this mapping is provided). </p>
+          <p>Participants are given a dataset based on MIMIC-IV which includes 114,132 admissions from the Emergency Department (ED), split into training, validation, and test sets. Each admission includes chief complaints and diagnosis codes (either ICD-9 or ICD-10) documented by the ED, at least one full radiology report, and a discharge summary with both "Brief Hospital Course" and "Discharge Instructions" sections. The goal is to generate these two critical sections in discharge summaries.</p>
           
-          <h2>
-            <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>A.2 Rules</h2>
-  
+          <h4>
+            <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>1.1 Rules</b></h4>
+
           <blockquote>
-          <p>All participants will be invited to write a paper describing their solution that will be included in the Proceedings of the 22st Workshop on Biomedical Language Processing. If you do not wish to write a paper, you must at least provide a thorough description of your system that will be included in the overview paper of the task. Otherwise, your submission (or reported scores) will not be taken into account.</p>
+          <p>All participants will be invited to submit a paper describing their solution to be included in the <a href="https://aclanthology.org/venues/bionlp/">Proceedings of the 23rd Workshop on Biomedical Natural Language Processing (BioNLP) at ACL 2024</a>. If you do not wish to write a paper, you must at least provide a thorough description of your system which will be included in the overview paper for this task. Otherwise, your submission (and reported scores) will not be taken into account.</p>
+          </blockquote>
+
+          <ul>
+            <li>Participants must agree to sign and follow the data access agreements for MIMIC-IV, MIMIC-IV-Note, and MIMIC-IV-ED (PhysioNet Credentialed Health Data License 1.5.0).</li>
+            <li>Participants may use private data to train (or pre-train) their systems, make a submission, and write a technical paper describing their solution. However, their score will not be counted towards the general leaderboard. In order to validate your leaderboard ranking, all the data used for the submission must be in some way available to other researchers.</li>
+            <li>All submissions must be made through the <a href="https://www.codabench.org/competitions/1980/">Codabench competition page</a>.</li>
+          </ul>
+
+          <h4>
+            <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>1.2 Timeline</b></h4>
+          <ul>
+            <li>First call for participation: February 5th (Monday), 2024</li>
+            <li>Release of training, validation, and public test datasets: February 6th (Tuesday), 2024</li>
+            <li>Release of hidden test dataset: April 12th (Friday), 2024</li>
+            <li>System submission deadline: May 10th (Friday), 2024</li>
+            <li>System papers due date: May 17th (Friday), 2024</li>
+            <li>Notification of acceptance: June 17th (Monday), 2024</li>
+            <li>Camera-ready system papers due: July 1st (Monday), 2024</li>
+            <li>BioNLP Workshop Date: August 16th (Friday), 2024</li>
+          </ul>
+
+          <b>All deadlines are 11:59 PM ("Anywhere on Earth")</b>
+
+          <h3>
+            <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>2. Data Access</b></h3>
+
+          <p>The dataset for this task is created from MIMIC-IV and its submodules MIMIC-IV-Note and MIMIC-IV-ED. In order to download the data, you <i>must</i> have a PhysioNet account with signed agreements for both datasets. If you do not have an account, you can create one <a href="https://physionet.org/register/">here</a>. Once you have an account, you must sign the data access agreements for MIMIC-IV <a href="https://physionet.org/content/mimiciv/2.2/">here</a>, MIMIC-IV-Note <a href="https://physionet.org/content/mimic-iv-note/2.2/">here</a>, and for MIMIC-IV-ED <a href="https://physionet.org/content/mimic-iv-ed/2.2/">here</a>.
+          </p>
+
+          <blockquote> 
+            Johnson, A.E.W., Bulgarelli, L., Shen, L. et al. MIMIC-IV, a freely accessible electronic health record dataset. Sci Data 10, 1 (2023). https://doi.org/10.1038/s41597-022-01899-x
+          </blockquote>
+
+          <blockquote> 
+            Johnson, A., Pollard, T., Horng, S., Celi, L. A., & Mark, R. (2023). MIMIC-IV-Note: Deidentified free-text clinical notes (version 2.2). PhysioNet. https://doi.org/10.13026/1n74-ne17.
           </blockquote>
           
+          <blockquote> 
+            Johnson, A., Bulgarelli, L., Pollard, T., Celi, L. A., Mark, R., & Horng, S. (2023). MIMIC-IV-ED (version 2.2). PhysioNet. https://doi.org/10.13026/5ntk-km72.
+          </blockquote>
+
+          <b>After signing the agreements, you may request access to the AutoClin24 dataset at <a href="https://huggingface.co/datasets/justin13601/autoclin24">Huggingface/AutoClin24</a>.</b></p>
+
+          Alternatively, if you do not wish to proceed via Huggingface, please email <b>xujustin@stanford.edu</b> to get the dataset.
+          <h4>
+            <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>2.1 Dataset Description</b></h4>
+
+            <p>The dataset has been split into a public dataset and a hidden dataset. The public dataset was split into training (71,903 samples), validation (15,408 samples), and testing sets (15,408 samples), while the entire hidden dataset (11,413 samples) will serve as a test set that will be released on April 12th (Friday), 2024. The total download size for the entire dataset is <code>718 MB</code> and the hidden dataset is <code>59 MB</code>.</p>
+
+            <p>Participants are free to use all or part of the provided dataset to develop their systems. However, submissions on Codabench will be evaluated on the entirety of the testing datasets.</p>
+
+            <p style="color: #8C1515; padding-top: 20px;"><b>Special Notes:</b></p>            
+            <p style="margin-top: -5px;">If you are using <code>pandas</code> to read the <code>.csv.gz</code> tables, please ensure you set <code>keep_default_na=False</code>. For instance:</p>
+
+            <pre><code>pd.read_csv('discharge_target.csv.gz', keep_default_na=False)</code></pre>
+
+            <p>Otherwise, <code>pandas</code> will automatically convert certain strings, such as in cases where the discharge instruction is <code>'NA'</code> or <code>'N/A'</code>, into the float <code>NaN</code>.</p>
+
+            <p>A select few admissions may have more than one ED stay_id
+            Each hadmid is associated with a discharge summary and at least one radiology report
+            Each stay_id can have multiple diagnoses, but only one chief complaint
+            </p>
+
+            Discharge summaries are split into various sections. However, each note in the dataset includes "Brief Hospital Course" and "Discharge Instructions" sections. 
+
+            brief is usually in the middle of the discharge note following information about patient history and treatments received during current admission. discharge is generally at the end of the note. 
+
+          <h5>
+            <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>2.1.1 Dataset Statistics</b></h5>
+            mean        193.505835 words for instructions and 325.704044 for brief hospital course. 
+
+            114378 ED stays and 114378 corresponding chief complaints
+            228913 ED diagnosis codes
+            114132 admissions and 114132 corresponding discharge summaries
+            449847 radiology reports
+            
+          <h5>
+            <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>2.1.2 Table Schemas</b></h5>
+            <p>Data tables are in the same schema as the ones originally provided by MIMIC. An additoinal table target is provided for convenice, which includes extracted             Sections were extracted using regex for convenience. 
+            </p>
+        
           
+          <h3>
+            <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>3. Evaluation Metrics</b></h3>
+
+            Will be scored on both sections separately, scores will be average across different metrics. On python3.7
+            
+            convert to single line string by replacing all '\n' with ' ' and all '\t' with ' '
+
+            two separate leaderboards, one on the initial public testing data, and one on the hidden test data which will be released on April 12th (Friday), 2024.
+        
+          <h3>
+            <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>4. Organizers</b></h3>
+
+          <div class="row">
+            <div class="col">
+              <img src="images/justin.jpg" alt="Justin Xu" style="border-radius: 50%;">
+              <h4 class="multiline-heading">Justin<br>Xu</h4>
+              <a href="https://justin13601.github.io/"><small>Website</small></a>
+            </div>
+            <div class="col">
+              <img src="images/jb.png" alt="JB Delbrouck" style="border-radius: 50%;">
+              <h4>Jean-Benoit Delbrouck</h4>
+              <a href="https://jbdel.github.io/"><small>Website</small></a>
+            </div>
+            <div class="col">
+              <img src="images/andrew.jpg" alt="Andrew Johnston" style="border-radius: 50%;">
+              <h4>Andrew Johnston</h4>
+              <a href="https://med.stanford.edu/xray/CR/AndrewJohnstonMD.html"><small>Website</small></a>
+            </div>
+            <div class="col">
+              <img src="images/louis.jpg" alt="Louis Blankemeier" style="border-radius: 50%;">
+              <h4>Louis Blankemeier</h4>
+              <a href="https://www.linkedin.com/in/louis-blankemeier/"><small>Website</small></a>
+            </div>
+            <div class="col">
+              <img src="images/curtis.jpg" alt="Curtis Langlotz" style="border-radius: 50%;">
+              <h4>Curtis Langlotz</h4>
+              <a href="https://profiles.stanford.edu/curtis-langlotz"><small>Website</small></a>
+            </div>
+          </div>
+
+          <p>If you have any questions, please feel free to reach out to <b>xujustin@stanford.edu</b>. We hope you enjoy the shared task and look forward to your systems!</p>
+          
+          <h3>
+            <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>5. References</b></h3>
+            <blockquote> 
+              Johnson, A.E.W., Bulgarelli, L., Shen, L. et al. MIMIC-IV, a freely accessible electronic health record dataset. Sci Data 10, 1 (2023). https://doi.org/10.1038/s41597-022-01899-x
+            </blockquote>
+  
+            <blockquote> 
+              Johnson, A., Pollard, T., Horng, S., Celi, L. A., & Mark, R. (2023). MIMIC-IV-Note: Deidentified free-text clinical notes (version 2.2). PhysioNet. https://doi.org/10.13026/1n74-ne17.
+            </blockquote>
+
+            <blockquote> 
+              Johnson, A., Bulgarelli, L., Pollard, T., Celi, L. A., Mark, R., & Horng, S. (2023). MIMIC-IV-ED (version 2.2). PhysioNet. https://doi.org/10.13026/5ntk-km72.
+            </blockquote>
+
+            <blockquote> 
+              Goldberger, A., Amaral, L., Glass, L., Hausdorff, J., Ivanov, P. C., Mark, R., ... & Stanley, H. E. (2000). PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals. Circulation [Online]. 101 (23), pp. e215–e220.
+            </blockquote>
+
+            <blockquote> 
+              Delbrouck, Jean-Benoit, et al. "Improving the factual correctness of radiology report generation with semantic rewards." EMNLP 2022 findings.
+            </blockquote>
+
+            <blockquote> 
+              Yuhao Zhang, Derek Merck, Emily Tsai, Christopher D. Manning, and Curtis Langlotz. 2020. Optimizing the Factual Correctness of a Summary: A Study of Summarizing Radiology Reports. In Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics, pages 5108-5120, Online. Association for Computational Linguistics.
+            </blockquote>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/jasonlong/cayman-theme">Cayman</a> is maintained by <a href="https://github.com/jasonlong">jasonlong</a>.</span>
