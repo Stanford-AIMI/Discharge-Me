@@ -1,20 +1,20 @@
-# AutoClin24 Challenge on Streamlining Large Scale Disease Classification and Clinical Documentation
+# "Discharge Me!" Challenge on Streamlining Large Scale Disease Classification and Clinical Documentation
 
-Welcome to AutoClin24, the BioNLP ACL'24 Shared Task on Streamlining Discharge Documentation.
+Welcome to "Discharge Me!", the BioNLP ACL'24 Shared Task on Streamlining Discharge Documentation.
 
-For information about the shared task, please visit the [Codabench Challenge Website](https://www.codabench.org/competitions/1975/) or the [GitHub Page](https://stanford-aimi.github.io/autoclin24/).  
+For information about the shared task, please visit the [Codabench Challenge Website](https://www.codabench.org/competitions/1975/) or the [GitHub Page](https://stanford-aimi.github.io/Discharge-Me/).  
 
 The dataset for this shared task is based off the MIMIC-IV dataset. Before accessing and utilizing the provided data split, all participants are required to have signed the data access agreements on PhysioNet.
 
 **By requesting access and using the provided Huggingface dataset split, the participants agree to the following:**
 - Participants will comply with the PhysioNet Credentialed Health Data License 1.5.0 pertaining to the use of the MIMIC-IV dataset and its modules (MIMIC-IV-Note and MIMIC-IV-ED).
-- Participants will use the granted access solely for the purpose of participating in AutoClin24 at BioNLP ACL'24. Unauthorized use or distribution of the data is prohibited.
+- Participants will use the granted access solely for the purpose of participating in "Discharge Me!" at BioNLP ACL'24. Unauthorized use or distribution of the data is prohibited.
 - Participants will ensure the confidentiality of the data and will not disclose any protected health information (PHI) if found.
-- Participants will acknowledge the use of the MIMIC-IV dataset in any publications, presentations, or reports resulting from their work in AutoClin24.
+- Participants will acknowledge the use of the MIMIC-IV dataset in any publications, presentations, or reports resulting from their work in "Discharge Me!".
 
 We hope you enjoy the shared task!
 
--- Organizers of AutoClin24 @ BioNLP ACL'24
+-- Organizers of "Discharge Me!" @ BioNLP ACL'24
 
 ### License
 
