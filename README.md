@@ -2,7 +2,7 @@
 
 Welcome to "Discharge Me!", the BioNLP ACL'24 Shared Task on Streamlining Discharge Documentation.
 
-For information about the shared task, please visit the [Codabench Challenge Website](https://www.codabench.org/competitions/1975/) or the [GitHub Page](https://stanford-aimi.github.io/discharge-me/).  
+For information about the shared task, please visit the [Codabench Challenge Website](https://www.codabench.org/competitions/2008/) or the [GitHub Page](https://stanford-aimi.github.io/discharge-me/).  
 
 The dataset for this shared task is based off the MIMIC-IV dataset. Before accessing and utilizing the provided data split, all participants are required to have signed the data access agreements on PhysioNet.
 
