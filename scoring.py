@@ -3,8 +3,37 @@ import json
 import numpy as np
 import pandas as pd
 
+import torch
+import torch.nn as nn
 import evaluate
+from bert_score import BERTScorer
 from rouge_score import rouge_scorer
+
+
+class BertScore(nn.Module):
+    def __init__(self):
+        super(BertScore, self).__init__()
+        with torch.no_grad():
+            self.bert_scorer = BERTScorer(
+                model_type="distilbert-base-uncased",
+                num_layers=5,
+                batch_size=64,
+                nthreads=4,
+                all_layers=False,
+                idf=False,
+                lang="en",
+                rescale_with_baseline=True,
+                baseline_path=None,
+            )
+
+    def forward(self, refs, hyps):
+        p, r, f = self.bert_scorer.score(
+            cands=hyps,
+            refs=refs,
+            verbose=True,
+            batch_size=64,
+        )
+        return torch.mean(f).item(), f.tolist()
 
 
 def calculate_scores(generated, reference, metrics):
@@ -16,15 +45,13 @@ def calculate_scores(generated, reference, metrics):
     for metric in metrics:
         scores[metric] = {"discharge_instructions": [], "brief_hospital_course": []}
 
-    # initialize scorers
+    # initialize classical scorers
     if "bleu" in metrics:
         bleuScorer = evaluate.load("bleu")
     if "rouge" in metrics:
         rougeScorer = rouge_scorer.RougeScorer(
             ["rouge1", "rouge2", "rougeL"], use_stemmer=True
         )
-    if "bertscore" in metrics:
-        bertScorer = evaluate.load("bertscore")
     if "gbleu" in metrics:
         gbleuScorer = evaluate.load("google_bleu")
     if "sacrebleu" in metrics:
@@ -32,7 +59,7 @@ def calculate_scores(generated, reference, metrics):
     if "meteor" in metrics:
         meteorScorer = evaluate.load("meteor")
 
-    def calculate_score(row_A, row_B):
+    def calculate_classical_scores(row_A, row_B):
         if "bleu" in metrics:
             temp = bleuScorer.compute(
                 references=[row_A["discharge_instructions"]],
@@ -66,19 +93,6 @@ def calculate_scores(generated, reference, metrics):
                     temp["rougeL"].fmeasure,
                 ]
             )
-        if "bertscore" in metrics:
-            temp = bertScorer.compute(
-                references=[row_A["discharge_instructions"]],
-                predictions=[row_B["discharge_instructions"]],
-                lang="en",
-            )
-            scores["bertscore"]["discharge_instructions"].append(temp["f1"][0])
-            temp = bertScorer.compute(
-                references=[row_A["brief_hospital_course"]],
-                predictions=[row_B["brief_hospital_course"]],
-                lang="en",
-            )
-            scores["bertscore"]["brief_hospital_course"].append(temp["f1"][0])
         if "gbleu" in metrics:
             temp = gbleuScorer.compute(
                 references=[row_A["discharge_instructions"]],
@@ -121,10 +135,33 @@ def calculate_scores(generated, reference, metrics):
     generated.set_index("hadm_id", drop=False, inplace=True)
     reference.set_index("hadm_id", drop=False, inplace=True)
 
+    print("Calculating classical scores...")
     for i, row_gen in enumerate(generated.to_dict("records")):
-        row_ref = reference.loc[row_gen["hadm_id"]].to_dict()
-        calculate_score(row_ref, row_gen)
-        # print(i)
+        try:
+            row_ref = reference.loc[row_gen["hadm_id"]].to_dict()
+        except KeyError:
+            print(f"Warning: No reference found for {row_gen['hadm_id']}.")
+            continue
+        calculate_classical_scores(row_ref, row_gen)
+    print("Classical scores calculated.")
+
+    # BERTScore
+    if "bertscore" in metrics:
+        print("Calculating BERTScore for Discharge Instructions...")
+        mean_discharge_instructions, _ = BertScore()(
+            hyps=generated["discharge_instructions"].tolist(),
+            refs=reference["discharge_instructions"].tolist(),
+        )
+        scores["bertscore"]["discharge_instructions"].append(
+            mean_discharge_instructions
+        )
+
+        print("Calculating BERTScore for Brief Hospital Course...")
+        mean_brief_hospital_course, _ = BertScore()(
+            hyps=generated["brief_hospital_course"].tolist(),
+            refs=reference["brief_hospital_course"].tolist(),
+        )
+        scores["bertscore"]["brief_hospital_course"].append(mean_brief_hospital_course)
 
     print(f"Processed {len(generated)}/{len(generated)} samples.", flush=True)
     print("Done.")
@@ -173,12 +210,8 @@ def compute_overall_score(scores):
             [rouge_l_discharge_instructions, rouge_l_brief_hospital_course]
         )
     if "bertscore" in metrics:
-        bertscore_discharge_instructions = np.mean(
-            scores["bertscore"]["discharge_instructions"]
-        )
-        bertscore_brief_hospital_course = np.mean(
-            scores["bertscore"]["brief_hospital_course"]
-        )
+        bertscore_discharge_instructions = scores["bertscore"]["discharge_instructions"]
+        bertscore_brief_hospital_course = scores["bertscore"]["brief_hospital_course"]
         leaderboard["bertscore"] = np.mean(
             [bertscore_discharge_instructions, bertscore_brief_hospital_course]
         )
@@ -259,7 +292,9 @@ reference["brief_hospital_course"] = reference["brief_hospital_course"].str.repl
 print("Done.")
 
 scores = calculate_scores(
-    generated, reference, metrics=["bleu", "rouge", "gbleu", "sacrebleu", "meteor"]
+    generated,
+    reference,
+    metrics=["bleu", "rouge", "bertscore", "gbleu", "sacrebleu", "meteor"],
 )
 leaderboard = compute_overall_score(scores)
 
