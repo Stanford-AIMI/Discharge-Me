@@ -1,0 +1,7 @@
+title: Discharge Me!
+description: BioNLP ACL'24 Shared Task on Streamlining Discharge Documentation
+show_downloads: true
+google_analytics:
+theme: jekyll-theme-cayman
+plugins:
+  - jekyll-seo-tag
