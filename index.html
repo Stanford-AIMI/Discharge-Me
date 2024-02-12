@@ -5,7 +5,7 @@
     <title>Discharge Me!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#ed1c24">
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico?">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -43,6 +43,12 @@
           <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>1. Task Overview</b></h3>
 
           <p>Participants are given a dataset based on MIMIC-IV which includes 114,024 admissions from the Emergency Department (ED), split into training, validation, and test sets. Each admission includes chief complaints and diagnosis codes (either ICD-9 or ICD-10) documented by the ED, at least one full radiology report, and a discharge summary with both "Brief Hospital Course" and "Discharge Instructions" sections. The goal is to generate these two critical sections in discharge summaries.</p>
+
+          <p>
+          <b>
+            Please click <a href="#faq">here</a> for Frequently Asked Questions (FAQ).
+          </b>
+          </p>
           
           <h4>
             <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>1.1 Rules</b></h4>
@@ -220,7 +226,26 @@
             <p><b>For specific submission instructions and details on evaluation, please visit the <a href="https://www.codabench.org/competitions/2008/">Codabench competition page</a>.</b></p>
         
           <h3>
-            <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>4. Organizers</b></h3>
+            <a id="faq" class="anchor" href="#faq" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>4. Frequently Asked Questions</b></h3>
+            <ul>
+              <li><b>Q:</b> Can I use the <code>text</code> field in <code>discharge.csv.gz</code> as an input to my system?</li>
+              <li><b>A:</b> Please see the Codabench discussion post <a href="https://www.codabench.org/forums/1927/">here</a> for a note regarding input data.</li>
+              <br>
+              <li><b>Q:</b> Where can I find the scoring program used for evaluation? It is not on the Codabench competition page.</li>
+              <li><b>A:</b> The scoring program is available on GitHub <a href="https://github.com/Stanford-AIMI/discharge-me/blob/febef0ef749168b06b03f8753eb07058359a9631/scoring_program.zip">here</a>.</li>
+              <li><b>Q:</b> Can I use external data to train my system?</li>
+              <br>
+              <li><b>A:</b> Yes, you may use external data to train your system. However, you must disclose all external data used in your system paper and/or submission description. Additionally, your system will not be ranked on the leaderboard if the data used for the submission is not available to other researchers.</li>
+              <br>
+              <li><b>Q:</b> Can I use private data to train my system?</li>
+              <li><b>A:</b> Yes, you may use private data to train your system. However, your system will not be ranked on the leaderboard if the data used for the submission is not available to other researchers.</li>
+              <br>
+              <li><b>Q:</b> Can I use pre-trained models to train my system?</li>
+              <li><b>A:</b> Yes, you may use pre-trained models and finetune it for your system. However, you must disclose all pre-trained models used in your system paper and/or submission description.</li>
+            </ul>
+
+          <h3>
+            <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>5. Organizers</b></h3>
 
           <div class="row">
             <div class="col">
