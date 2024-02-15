@@ -60,6 +60,7 @@
           <ul>
             <li>Participants must agree to sign and follow the data access agreements for MIMIC-IV, MIMIC-IV-Note, and MIMIC-IV-ED (PhysioNet Credentialed Health Data License 1.5.0).</li>
             <li>Participants may use private data to train (or pre-train) their systems, make a submission, and write a technical paper describing their solution. However, their score will not be counted towards the general leaderboard. In order to validate your leaderboard ranking, all the data used for the submission must be in some way available to other researchers.</li>
+            <li>If participants employ LLMs, please ensure that the team notes the expected outputs by the models or the prompting strategies used clearly so that results can be reproduced.</li>
             <li>All submissions must be made through the <a href="https://www.codabench.org/competitions/2008/">Codabench competition page</a>.</li>
           </ul>
 
@@ -229,12 +230,18 @@
             <a id="faq" class="anchor" href="#faq" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>4. Frequently Asked Questions</b></h3>
             <ul>
               <li><b>Q:</b> Can I use the <code>text</code> field in <code>discharge.csv.gz</code> as an input to my system?</li>
-              <li><b>A:</b> Please see the Codabench discussion post <a href="https://www.codabench.org/forums/1927/">here</a> for a note regarding input data.</li>
+              <li><b>A:</b> Please see the Codabench discussion post <a href="https://www.codabench.org/forums/1927/205/">here</a> for a note regarding input data.</li>
+              <br>
+              <li><b>Q:</b> Do I have to use all the provided data?</li>
+              <li><b>A:</b> Please see the Codabench discussion post <a href="https://www.codabench.org/forums/1927/212/">here</a> for a note regarding data tables.</li>
+              <br>
+              <li><b>Q:</b> What sort of solution systems would be accepted? Do they have to be a machine learning model?</li>
+              <li><b>A:</b> Please see the Codabench discussion post <a href="https://www.codabench.org/forums/1927/212/">here</a> for a note regarding accepted solutions.</li>
               <br>
               <li><b>Q:</b> Where can I find the scoring program used for evaluation? It is not on the Codabench competition page.</li>
               <li><b>A:</b> The scoring program is available on GitHub <a href="https://github.com/Stanford-AIMI/discharge-me/blob/febef0ef749168b06b03f8753eb07058359a9631/scoring_program.zip">here</a>.</li>
-              <li><b>Q:</b> Can I use external data to train my system?</li>
               <br>
+              <li><b>Q:</b> Can I use external data to train my system?</li>
               <li><b>A:</b> Yes, you may use external data to train your system. However, you must disclose all external data used in your system paper and/or submission description. Additionally, your system will not be ranked on the leaderboard if the data used for the submission is not available to other researchers.</li>
               <br>
               <li><b>Q:</b> Can I use private data to train my system?</li>
