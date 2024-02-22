@@ -117,7 +117,7 @@
 
             <p>Discharge summaries are split into various sections and written under a variety of headings. However, each note in the dataset for this task includes a "Brief Hospital Course" and a "Discharge Instructions" section. The "Brief Hospital Course" section is usually located in the middle of the discharge summary following information about patient history and treatments received during the current admission. The "Discharge Instructions" section is generally located the end of the note as one of the last sections.</p>
 
-            <p>Each admission is defined by a unique <code>hadm_id</code> is associated with a corresponding discharge summary and <i>at least</i> one radiology report. Most admissions in the dataset will have only one corresponding ED stay. However, a select few admissions may have more than one ED stay (ie. multiple <code>stay_id</code>). Each stay_id can have multiple diagnoses, but will only have one chief complaint.</p>
+            <p>Each admission is defined by a unique <code>hadm_id</code> and is associated with a corresponding discharge summary and <b>at least</b> one radiology report. Most admissions in the dataset will have only one corresponding ED stay. However, a select few admissions may have more than one ED stay (ie. multiple <code>stay_id</code>). Each <code>stay_id</code> can have multiple ICD diagnoses, but will only have one chief complaint.</p>
 
             <p style="color: #8C1515; padding-top: 20px;">Special Note:</p>            
             <p style="margin-top: -5px;">If you are using <code>pandas</code> to read the <code>.csv.gz</code> tables, please ensure you set <code>keep_default_na=False</code>. For instance:</p>
@@ -229,6 +229,7 @@
         
           <h3>
             <a id="faq" class="anchor" href="#faq" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>4. Frequently Asked Questions</b></h3>
+            <p><b>Please also visit the <a href="https://www.codabench.org/forums/1927/">Codabench competition forum</a>. You may find existing answers to your questions there, and are welcome to make your own post.</b></p>
             <ul>
               <li><b>Q:</b> What will the hidden testing dataset look like?</li>
               <li><b>A:</b> The hidden testing dataset will be identical in structure to the public datasets already released, with the target sections also in the full discharge summary. Please see the Codabench discussion post <a href="https://www.codabench.org/forums/1927/215/"><b>here (scroll to comment #8)</b></a> for more details.</li>
