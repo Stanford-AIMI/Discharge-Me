@@ -36,13 +36,13 @@
         <a id="user-content-header-1" class="anchor" href="#header-1" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>Generating Discharge Summary Sections</b></h2>
   
         <p>
-          The primary objective of this task is to reduce the time and effort clinicians spend on writing detailed notes in the electronic health record (EHR). Clinicians play a crucial role in documenting patient progress in discharge summaries, but the creation of concise yet comprehensive hospital course summaries and discharge instructions often demands a significant amount of time, especially since these sections cannot be readily copied from prior notes. This can lead to clinician burnout and operational inefficiencies within hospital workflows. By streamlining the generation of these sections, we can not only enhance the accuracy and completeness of clinical documentation but also significantly reduce the time clinicians spend on administrative tasks, ultimately improving patient care quality.
+          The primary objective of this task is to reduce the time and effort clinicians spend on writing detailed notes in the electronic health record (EHR). Clinicians play a crucial role in documenting patient progress in discharge summaries, but the creation of concise yet comprehensive hospital course summaries and discharge instructions often demands a significant amount of time. This can lead to clinician burnout and operational inefficiencies within hospital workflows. By streamlining the generation of these sections, we can not only enhance the accuracy and completeness of clinical documentation but also significantly reduce the time clinicians spend on administrative tasks, ultimately improving patient care quality.
         </p>
 
         <h3>
           <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>1. Task Overview</b></h3>
 
-          <p>Participants are given a dataset based on MIMIC-IV which includes 112,893 admissions from the Emergency Department (ED), split into training, validation, and test sets. Each admission includes chief complaints and diagnosis codes (either ICD-9 or ICD-10) documented by the ED, at least one radiology report, and a discharge summary with both "Brief Hospital Course" and "Discharge Instructions" sections. The goal is to generate these two critical sections in discharge summaries.</p>
+          <p>Participants are given a dataset based on MIMIC-IV which includes 109,168 admissions from the Emergency Department (ED), split into training, validation, phase I testing, and phase II testing sets. Each admission includes chief complaints and diagnosis codes (either ICD-9 or ICD-10) documented by the ED, at least one radiology report, and a discharge summary with both "Brief Hospital Course" and "Discharge Instructions" sections. The goal is to generate these two critical sections in discharge summaries.</p>
 
           <p>
           <b>
@@ -58,10 +58,10 @@
           </blockquote>
 
           <ul>
-            <li>Participants must agree to sign and follow the data access agreements for MIMIC-IV, MIMIC-IV-Note, and MIMIC-IV-ED (PhysioNet Credentialed Health Data License 1.5.0).</li>
+            <li>Participants must comply with the PhysioNet Credentialed Health Data Use Agreement when using the data.</li>
             <li>Participants may use any additional data to train (or pre-train) their systems. However, all data used for the submission must be in some way available to other researchers.</li>
             <li>Participants may involve existing models trained on proprietary data in their systems. However these models must also be accessible to other researchers in some capacity.</li>
-            <li>If participants employ LLMs, please ensure that the team clearly notes the expected outputs by the models or the prompting strategies used so that results can be reproduced.</li>
+            <li>If participants employ LLMs, please ensure that the team clearly notes the expected outputs by the models or the prompting strategies used so that results can be reproduced. However, please note that sending data via an API to a third party is a violation of the DUA. Please consult <a href="https://physionet.org/news/post/gpt-responsible-use">this</a> for options.</li>
             <li>All submissions must be made through the <a href="https://www.codabench.org/competitions/2008/">Codabench competition page</a>.</li>
           </ul>
 
@@ -69,8 +69,8 @@
             <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>1.2 Timeline</b></h4>
           <ul>
             <li>First call for participation: February 5th (Monday), 2024</li>
-            <li>Release of training, validation, and public test datasets: February 6th (Tuesday), 2024</li>
-            <li>Release of hidden test dataset: April 12th (Friday), 2024</li>
+            <li>Release of training, validation, and phase I testing datasets: February 6th (Tuesday), 2024</li>
+            <li>Release of phase II testing dataset: April 12th (Friday), 2024</li>
             <li>System submission deadline: May 10th (Friday), 2024</li>
             <li>System papers due date: May 17th (Friday), 2024</li>
             <li>Notification of acceptance: June 17th (Monday), 2024</li>
@@ -84,44 +84,31 @@
             <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>1.3 How to Participate</b></h4>
 
             <p>
-              Please visit the <a href="https://www.codabench.org/competitions/2008/">Codabench competition page</a> to register for this shared task. Codabench is the platform that we will use throughout the challenge, and an account is required to officially join the competition. All submissions and leaderboards will be available on that platform. Please direct any questions about the competition to the <a href="https://www.codabench.org/forums/1927/">Codabench discussion forum</a> or email <b>xujustin@stanford.edu</b>.
+              Please visit the <a href="https://www.codabench.org/competitions/2008/">Codabench competition page</a> to register for this shared task. Codabench [1] is the platform that we will use throughout the challenge, and an account is required to officially join the competition. All submissions and leaderboards will be available on that platform. Please direct any questions about the competition to the <a href="https://www.codabench.org/forums/1927/">Codabench discussion forum</a> or email <b>xujustin@stanford.edu</b>.
             </p>
           
             <h3>
             <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>2. Data</b></h3>
 
-          <p>The dataset for this task is created from MIMIC-IV and its submodules MIMIC-IV-Note and MIMIC-IV-ED. In order to download the data, you <i>must</i> have a PhysioNet account with signed agreements for both datasets. If you do not have an account, you can create one <a href="https://physionet.org/register/">here</a>. Once you have an account, you must sign the data access agreements for MIMIC-IV <a href="https://physionet.org/content/mimiciv/2.2/">here</a>, MIMIC-IV-Note <a href="https://physionet.org/content/mimic-iv-note/2.2/">here</a>, and for MIMIC-IV-ED <a href="https://physionet.org/content/mimic-iv-ed/2.2/">here</a>.
+          <p>The dataset for this task is created from MIMIC-IV's submodules MIMIC-IV-Note [2] and MIMIC-IV-ED [3] and is available on PhysioNet [4]. In order to download the data, you <i>must</i> have a PhysioNet account with signed agreements for both datasets. If you do not have an account, you can create one <a href="https://physionet.org/register/">here</a>. Information on the required CITI training and credntialing process is available <a href="https://physionet.org/about/citi-course/">here</a>.
           </p>
 
-          <blockquote> 
-            Johnson, A.E.W., Bulgarelli, L., Shen, L. et al. MIMIC-IV, a freely accessible electronic health record dataset. Sci Data 10, 1 (2023). https://doi.org/10.1038/s41597-022-01899-x
-          </blockquote>
+          <b>The dataset for the "Discharge Me!" task is available on PhysioNet <a href="https://physionet.org/content/discharge-me/1.2/">here</a>.</b></p>
 
-          <blockquote> 
-            Johnson, A., Pollard, T., Horng, S., Celi, L. A., & Mark, R. (2023). MIMIC-IV-Note: Deidentified free-text clinical notes (version 2.2). PhysioNet. https://doi.org/10.13026/1n74-ne17.
-          </blockquote>
-          
-          <blockquote> 
-            Johnson, A., Bulgarelli, L., Pollard, T., Celi, L. A., Mark, R., & Horng, S. (2023). MIMIC-IV-ED (version 2.2). PhysioNet. https://doi.org/10.13026/5ntk-km72.
-          </blockquote>
-
-          <b>After signing the agreements, you may request access to the "Discharge Me!" dataset at <a href="https://huggingface.co/datasets/justin13601/discharge-me">Huggingface/Discharge-Me</a>.</b></p>
-
-          Alternatively, if you do not wish to proceed via Huggingface, please email <b>xujustin@stanford.edu</b> to get the dataset.
           <h4>
             <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>2.1 Dataset Description</b></h4>
 
-            <p>The dataset has been split into a public dataset and a hidden dataset. The public dataset was split into training (71,835 samples), validation (15,394 samples), and testing sets (14,702 samples), while the entire hidden dataset (10,962 samples) will serve as a test set that will be released on April 12th (Friday), 2024. The total download size is around <code>654 MB</code> for the entire dataset and <code>70.8 MB</code>for the hidden dataset only.</p>
+            <p>The dataset has been split into a training (68,785 samples), a validation (14,719 samples), a phase I testing (14,702 samples), and a phase II testing (10,962 samples) dataset. The phase II testing dataset will serve as the final test set that will be released on April 12th (Friday), 2024. All datasets and tables are derived from the MIMIC-IV submodules.</p>
 
             <p>
-              The code to process the raw MIMIC-IV files from PhysioNet dataset is available on Colab <a href="https://colab.research.google.com/drive/1yW-29KcDYoswMrqwjEMO6l6i2Ll3p5BX?usp=sharing">here</a>.
+              The code to process the raw MIMIC-IV files from PhysioNet to form the challenge dataset is available on Colab <a href="https://colab.research.google.com/drive/1yW-29KcDYoswMrqwjEMO6l6i2Ll3p5BX?usp=sharing">here</a>.
             </p>
 
             <p><b>Participants are free to use all or part of the provided dataset to develop their systems. However, submissions on Codabench will be evaluated on the entirety of the testing datasets.</b></p>
 
             <p>Discharge summaries are split into various sections and written under a variety of headings. However, each note in the dataset for this task includes a "Brief Hospital Course" and a "Discharge Instructions" section. The "Brief Hospital Course" section is usually located in the middle of the discharge summary following information about patient history and treatments received during the current admission. The "Discharge Instructions" section is generally located the end of the note as one of the last sections.</p>
 
-            <p>Each admission is defined by a unique <code>hadm_id</code> and is associated with a corresponding discharge summary and <b>at least</b> one radiology report. Most admissions in the dataset will have only one corresponding ED stay. However, a select few admissions may have more than one ED stay (ie. multiple <code>stay_id</code>). Each <code>stay_id</code> can have multiple ICD diagnoses, but will only have one chief complaint. Participants may use online resources for descriptions and details about ICD codes.</p>
+            <p>Each admission is defined by a unique <code>hadm_id</code> and is associated with a corresponding discharge summary and <b><i>at least</i></b> one radiology report. Most admissions in the dataset will have only one corresponding ED stay. However, a select few admissions may have more than one ED stay (ie. multiple <code>stay_id</code>). Each <code>stay_id</code> can have multiple ICD diagnoses, but will only have one chief complaint. Participants may use online resources for descriptions and details about ICD codes.</p>
 
             <p style="color: #8C1515; padding-top: 20px;">Special Note:</p>            
             <p style="margin-top: -5px;">If you are using <code>pandas</code> to read the <code>.csv.gz</code> tables, please ensure you set <code>keep_default_na=False</code>. For instance:</p>
@@ -151,86 +138,101 @@
                   <th class="tg-amwm">Total Count</th>
                   <th class="tg-amwm">Training</th>
                   <th class="tg-amwm">Validation</th>
-                  <th class="tg-amwm">Public Testing</th>
-                  <th class="tg-amwm">Hidden Testing</th>
+                  <th class="tg-amwm">Phase I Testing</th>
+                  <th class="tg-amwm">Phase II Testing</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td class="tg-8zwo">Admissions</td>
-                  <td class="tg-baqh">112,893</td>
-                  <td class="tg-baqh">71,835</td>
-                  <td class="tg-baqh">15,394</td>
+                  <td class="tg-baqh">109,168</td>
+                  <td class="tg-baqh">68,785</td>
+                  <td class="tg-baqh">14,719</td>
                   <td class="tg-baqh">14,702</td>
                   <td class="tg-baqh">10,962</td>
                 </tr>
                 <tr>
                   <td class="tg-8zwo">Discharge Summaries</td>
-                  <td class="tg-baqh">112,893</td>
-                  <td class="tg-baqh">71,835</td>
-                  <td class="tg-baqh">15,394</td>
+                  <td class="tg-baqh">109,168</td>
+                  <td class="tg-baqh">68,785</td>
+                  <td class="tg-baqh">14,719</td>
                   <td class="tg-baqh">14,702</td>
                   <td class="tg-baqh">10,962</td>
                 </tr>
                 <tr>
                   <td class="tg-8zwo">Radiology Reports</td>
-                  <td class="tg-baqh">439,996</td>
-                  <td class="tg-baqh">284,402</td>
-                  <td class="tg-baqh">60,189</td>
+                  <td class="tg-baqh">409,359</td>
+                  <td class="tg-baqh">259,304</td>
+                  <td class="tg-baqh">54,650</td>
                   <td class="tg-baqh">54,797</td>
                   <td class="tg-baqh">40,608</td>
                 </tr>
                 <tr>
                   <td class="tg-8zwo">ED Stays & Chief Complaints</td>
-                  <td class="tg-baqh">113,138</td>
-                  <td class="tg-baqh">71,994</td>
-                  <td class="tg-baqh">15,428</td>
+                  <td class="tg-baqh">109,403</td>
+                  <td class="tg-baqh">68,936</td>
+                  <td class="tg-baqh">14,751</td>
                   <td class="tg-baqh">14,731</td>
                   <td class="tg-baqh">10,985</td>
                 </tr>
                 <tr>
                   <td class="tg-8zwo">ED Diagnoses</td>
-                  <td class="tg-baqh">226,259</td>
-                  <td class="tg-baqh">144,528</td>
-                  <td class="tg-baqh">30,553</td>
+                  <td class="tg-baqh">218,376</td>
+                  <td class="tg-baqh">138,112</td>
+                  <td class="tg-baqh">29,086</td>
                   <td class="tg-baqh">29,414</td>
                   <td class="tg-baqh">21,764</td>
                 </tr>
               </tbody>
               </table>
 
-              <p style="padding-top: 20px;">Additionally, the mean length of the "Brief Hospital Course" section is 325.77 words, and the mean length of the "Discharge Instructions" section is 193.69 words, for the entire dataset.</p>
+              <p style="padding-top: 20px;">Additionally, the mean length of the "Brief Hospital Course" section is approximately 326 words, and the mean length of the "Discharge Instructions" section is approximately 194 words, for the entire dataset.</p>
             
           <h4>
             <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>2.3 Dataset Schemas</b></h4>
-            <p>For consistency and ease-of-use, the schemas of the data tables have been kept the same as the ones originally provided in MIMIC-IV and its submodules. An additional table in <code>discharge_target.csv.gz</code> is provided, which includes extracted "Brief Hospital Course" and "Discharge Instructions" sections from the discharge summaries.             
+            <p>For consistency and ease-of-use, the schemas of the data tables have been kept the same as the ones originally provided in MIMIC-IV's submodules. An additional table in <code>discharge_target.csv.gz</code> is provided, which includes extracted "Brief Hospital Course" and "Discharge Instructions" sections from the discharge summaries.             
             </p>
-
-            <p><b>Sample rows of the dataset can be viewed using the Dataset Viewer at <a href="https://huggingface.co/datasets/justin13601/discharge-me">Huggingface/Discharge-Me</a>.</b></p>
           
           <h3>
             <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>3. Evaluation Metrics</b></h3>
 
-            The metrics for this task are based on textual similarity and factual correctness of the generated text. Specifically, we will use the following metrics:
+            The metrics for this task are based on a combination of textual similarity and factual correctness of the generated text. Specifically, we will consider the following metrics:
               <ul>
-                <li>BLEU-4</li>
-                <li>ROUGE-1</li>
-                <li>ROUGE-2</li>
-                <li>ROUGE-L</li>
-                <li>BERTScore</li>
-                <li>SacreBLEU</li>
-                <li>Meteor</li>
-                <li>AlignScore</li>
-                <li>MEDCON</li>
+                <li>BLEU-4 [5]</li>
+                <li>ROUGE-1, -2, -L [6]</li>
+                <li>BERTScore [7]</li>
+                <li>Meteor [8]</li>
+                <li>AlignScore [9]</li>
+                <li>MEDCON [10]</li>
               </ul>
 
             <p>Additionally, the submissions from the top-performing teams will be reviewed by clinicians at the end of the competition.</p>
 
-            <p>There will be two separate leaderboards on the <a href="https://www.codabench.org/competitions/2008/">Codabench competition page</a>. One will be dedicated for the scores from the initial public testing dataset, and one will be dedicated for the scores from the hidden testing dataset which will be released on April 12th (Friday), 2024.</p>
+            <p>There will be two separate leaderboards on the <a href="https://www.codabench.org/competitions/2008/">Codabench competition page</a>. One will be dedicated for the scores from the initial phase I testing dataset, and one will be dedicated for the scores from the phase II testing dataset which will be released on April 12th (Friday), 2024.</p>
 
-            <p>Initially, submissions will be scored on both discharge summary sections separately. Metric scores will be averaged across all samples in the testing set to compute several performance scores for each section (<i>not</i> reported on the leaderboards). Then, we will average each metric score of the two sections to get mean metric scores on both sections (reported under the metric name on the leaderboards). Finally, we will normalize the scores of each of the different metrics and average them to arrive at a final overall system score (reported as <code>Overall</code> on the leaderboards).</p>
-            
-            <p>All scoring calculations will be done on Codabench with a Python 3.9 environment. The evaluation scripts are available on GitHub for reference <a href="https://github.com/Stanford-AIMI/discharge-me/blob/main/scoring_program.zip">here</a>.</p>
+            <p>Initially, submissions will be scored on both target sections separately. The mean across all test samples will be computed for each metric, resulting in several performance scores for each of the two target sections (not reported on the leaderboards). Then, for each metric, we will take the mean of the scores for each of the two target sections and report it under the metric name on the leaderboards. Finally, we will take the mean once again over all the metrics to arrive at a final overall system score (reported as Overall on the leaderboards). For instance, given <img src="https://latex.codecogs.com/svg.image?&space;N" title=" N" /> samples, suppose <img src="https://latex.codecogs.com/svg.image?&space;s" title=" s" /> is defined as the score for a given sample for a given metric, then the mean across all samples, <img src="https://latex.codecogs.com/svg.image?&space;S" title=" S" />, would be calculated by:</p>
+
+            <div style="text-align: center;">
+              <img src="https://latex.codecogs.com/svg.image?S=\sum_{1}^{N}(S_{i})/N" title="S=\sum_{1}^{N}(S_{i})/N" />
+            </div>
+
+            <p>
+              We would then calculate <img src="https://latex.codecogs.com/svg.image?\beta&space;" title="\beta " />, the mean of a given metric over both target sections, for each of the 8 metrics using:
+            </p>
+
+            <div style="text-align: center;">
+              <img src="https://latex.codecogs.com/svg.image?\beta=(S_{BriefHospitalCourse}&plus;S_{DischargeInstructions})/2" title="\beta=(S_{BriefHospitalCourse}+S_{DischargeInstructions})/2" />
+            </div>
+
+            <p>
+              Finally, the overall system score would be calculated by taking the mean of the 8 <img src="https://latex.codecogs.com/svg.image?\beta" title="\beta" /> values:
+            </p>
+
+            <div style="text-align: center;">
+              <img src="https://latex.codecogs.com/svg.image?Overall=\sum_{1}^{8}(\beta_{i})/8" title="Overall=\sum_{1}^{8}(\beta_{i})/8" />
+            </div>
+  
+            <p>All scoring calculations will be done on Codabench with a Python 3.9 environment. The evaluation scripts are available on GitHub for reference <a href="https://github.com/Stanford-AIMI/discharge-me/tree/main/scoring">here</a>.</p>
 
             <p><b>For specific submission instructions and details on evaluation, please visit the <a href="https://www.codabench.org/competitions/2008/">Codabench competition page</a>.</b></p>
         
@@ -238,8 +240,8 @@
             <a id="faq" class="anchor" href="#faq" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>4. Frequently Asked Questions</b></h3>
             <p><b>Please also visit the <a href="https://www.codabench.org/forums/1927/">Codabench competition forum</a>. You may find existing answers to your questions there, and are welcome to make your own post.</b></p>
             <ul>
-              <li><b>Q:</b> What will the hidden testing dataset look like?</li>
-              <li><b>A:</b> The hidden testing dataset will be identical in structure to the public datasets already released, with the target sections also in the full discharge summary. Please see the Codabench discussion post <a href="https://www.codabench.org/forums/1927/215/"><b>here (scroll to comment #8)</b></a> for more details.</li>
+              <li><b>Q:</b> What will the phase II testing dataset look like?</li>
+              <li><b>A:</b> The phase II testing dataset will be identical in structure to the phase I testing dataset already released, with the target sections also in the full discharge summary. Please see the Codabench discussion post <a href="https://www.codabench.org/forums/1927/215/"><b>here</b> (scroll to comment #8)</a> for more details.</li>
               <br>
               <li><b>Q:</b> Why are there target sections that only have a length of one word?</li>
               <li><b>A:</b> Thanks @mchizhik for bringing this to our attention. Please see the Codabench discussion post <a href="https://www.codabench.org/forums/1927/215/"><b>here</b></a> for a note regarding the target sections and some minor changes to number of samples in the test datasets.</li>
@@ -257,7 +259,7 @@
               <li><b>A:</b> Please see the Codabench discussion post <a href="https://www.codabench.org/forums/1927/212/"><b>here</b></a> for a note regarding accepted solutions.</li>
               <br>
               <li><b>Q:</b> Where can I find the scoring program used for evaluation? It is not on the Codabench competition page.</li>
-              <li><b>A:</b> The scoring program is available on GitHub <a href="https://github.com/Stanford-AIMI/discharge-me/blob/main/scoring_program.zip"><b>here</b></a>.</li>
+              <li><b>A:</b> The scoring scripts are available on GitHub <a href="https://github.com/Stanford-AIMI/discharge-me/tree/main/scoring"><b>here</b></a>.</li>
               <br>
               <li><b>Q:</b> Can I use external data to train my system?</li>
               <li><b>A:</b> Yes, you may use external data to train your system. However, you must disclose all external data used in your system paper and/or submission description. Additionally, your system will not be ranked on the leaderboard if the data used for the submission is not available to other researchers.</li>
@@ -305,33 +307,45 @@
           <h3>
             <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>5. References</b></h3>
 
-            <blockquote> 
-            Z. Xu et al., “Codabench: Flexible, easy-to-use, and reproducible meta-benchmark platform,” Patterns, vol. 3, no. 7, pp. 100543-100543, Jul. 2022, doi: https://doi.org/10.1016/j.patter.2022.100543.
-            </blockquote>
+          <blockquote> 
+            [1] Z. Xu et al., “Codabench: Flexible, easy-to-use, and reproducible meta-benchmark platform,” Patterns, vol. 3, no. 7, pp. 100543-100543, Jul. 2022, doi: https://doi.org/10.1016/j.patter.2022.100543.
+          </blockquote>
 
-            <blockquote> 
-              Johnson, A.E.W., Bulgarelli, L., Shen, L. et al. MIMIC-IV, a freely accessible electronic health record dataset. Sci Data 10, 1 (2023). https://doi.org/10.1038/s41597-022-01899-x
-            </blockquote>
-  
-            <blockquote> 
-              Johnson, A., Pollard, T., Horng, S., Celi, L. A., & Mark, R. (2023). MIMIC-IV-Note: Deidentified free-text clinical notes (version 2.2). PhysioNet. https://doi.org/10.13026/1n74-ne17.
-            </blockquote>
+          <blockquote> 
+            [2] Johnson, A., Pollard, T., Horng, S., Celi, L. A., & Mark, R. (2023). MIMIC-IV-Note: Deidentified free-text clinical notes (version 2.2). PhysioNet. https://doi.org/10.13026/1n74-ne17.
+          </blockquote>
+          
+          <blockquote> 
+            [3] Johnson, A., Bulgarelli, L., Pollard, T., Celi, L. A., Mark, R., & Horng, S. (2023). MIMIC-IV-ED (version 2.2). PhysioNet. https://doi.org/10.13026/5ntk-km72.
+          </blockquote>
 
-            <blockquote> 
-              Johnson, A., Bulgarelli, L., Pollard, T., Celi, L. A., Mark, R., & Horng, S. (2023). MIMIC-IV-ED (version 2.2). PhysioNet. https://doi.org/10.13026/5ntk-km72.
-            </blockquote>
+          <blockquote> 
+            [4] Goldberger, A., Amaral, L., Glass, L., Hausdorff, J., Ivanov, P. C., Mark, R., ... & Stanley, H. E. (2000). PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals. Circulation [Online]. 101 (23), pp. e215–e220.
+          </blockquote>
 
-            <blockquote> 
-              Goldberger, A., Amaral, L., Glass, L., Hausdorff, J., Ivanov, P. C., Mark, R., ... & Stanley, H. E. (2000). PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals. Circulation [Online]. 101 (23), pp. e215–e220.
-            </blockquote>
+          <blockquote> 
+            [5] Kishore Papineni, Salim Roukos, Todd Ward, and Wei-Jing Zhu. 2002. Bleu: a Method for Automatic Evaluation of Machine Translation. In Proceedings of the 40th Annual Meeting of the Association for Computational Linguistics, pages 311–318, Philadelphia, Pennsylvania, USA. Association for Computational Linguistics.
+          </blockquote>
 
-            <blockquote> 
-              Delbrouck, Jean-Benoit, et al. "Improving the factual correctness of radiology report generation with semantic rewards." EMNLP 2022 findings.
-            </blockquote>
+          <blockquote> 
+            [6] Chin-Yew Lin. 2004. ROUGE: A Package for Automatic Evaluation of Summaries. In Text Summarization Branches Out, pages 74–81, Barcelona, Spain. Association for Computational Linguistics.
+          </blockquote>
 
-            <blockquote> 
-              Yuhao Zhang, Derek Merck, Emily Tsai, Christopher D. Manning, and Curtis Langlotz. 2020. Optimizing the Factual Correctness of a Summary: A Study of Summarizing Radiology Reports. In Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics, pages 5108-5120, Online. Association for Computational Linguistics.
-            </blockquote>
+          <blockquote> 
+            [7] T. Zhang, V. Kishore, F. Wu, K. Q. Weinberger, and Y. Artzi, “BERTScore: Evaluating Text Generation with BERT,” arXiv.org, 2019. https://arxiv.org/abs/1904.09675.
+          </blockquote>
+
+          <blockquote> 
+            [8] Satanjeev Banerjee and Alon Lavie. 2005. METEOR: An Automatic Metric for MT Evaluation with Improved Correlation with Human Judgments. In Proceedings of the ACL Workshop on Intrinsic and Extrinsic Evaluation Measures for Machine Translation and/or Summarization, pages 65–72, Ann Arbor, Michigan. Association for Computational Linguistics.
+          </blockquote>
+
+          <blockquote> 
+            [9] Yuheng Zha, Yichi Yang, Ruichen Li, and Zhiting Hu. 2023. AlignScore: Evaluating Factual Consistency with A Unified Alignment Function. In Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pages 11328–11348, Toronto, Canada. Association for Computational Linguistics.
+          </blockquote>
+
+          <blockquote> 
+            [10] W. Yim, Y. Fu, A. Ben Abacha, N. Snider, T. Lin, and M. Yetisgen, “Aci-bench: a Novel Ambient Clinical Intelligence Dataset for Benchmarking Automatic Visit Note Generation,” Scientific Data, vol. 10, no. 1, p. 586, Sep. 2023, doi: https://doi.org/10.1038/s41597-023-02487-3. ‌
+          </blockquote>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/Stanford-AIMI/discharge-me">Discharge Me!</a> is maintained by <a href="https://github.com/Stanford-AIMI">StanfordAIMI</a>.</span>
