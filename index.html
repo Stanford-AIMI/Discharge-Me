@@ -113,6 +113,10 @@
 
             <p>The dataset has been split into a public dataset and a hidden dataset. The public dataset was split into training (71,835 samples), validation (15,394 samples), and testing sets (14,702 samples), while the entire hidden dataset (10,962 samples) will serve as a test set that will be released on April 12th (Friday), 2024. The total download size is around <code>654 MB</code> for the entire dataset and <code>70.8 MB</code>for the hidden dataset only.</p>
 
+            <p>
+              The code to process the raw MIMIC-IV files from PhysioNet dataset is available on Colab <a href="https://colab.research.google.com/drive/1yW-29KcDYoswMrqwjEMO6l6i2Ll3p5BX?usp=sharing">here</a>.
+            </p>
+
             <p><b>Participants are free to use all or part of the provided dataset to develop their systems. However, submissions on Codabench will be evaluated on the entirety of the testing datasets.</b></p>
 
             <p>Discharge summaries are split into various sections and written under a variety of headings. However, each note in the dataset for this task includes a "Brief Hospital Course" and a "Discharge Instructions" section. The "Brief Hospital Course" section is usually located in the middle of the discharge summary following information about patient history and treatments received during the current admission. The "Discharge Instructions" section is generally located the end of the note as one of the last sections.</p>
@@ -209,7 +213,7 @@
 
             The metrics for this task are based on the relevance and factual correctness of the generated text. Specifically, we will use the following metrics:
               <ul>
-                <li>BLEU</li>
+                <li>BLEU-4</li>
                 <li>ROUGE-1</li>
                 <li>ROUGE-2</li>
                 <li>ROUGE-L</li>
@@ -223,7 +227,7 @@
 
             <p>Additionally, the submissions from the top-performing teams will be reviewed by clinicians at the end of the competition.</p>
 
-            <p>There will be two separate leaderboards on the <a href="https://www.codabench.org/competitions/2008/">Codabench competition page</a> One will be dedicated for the scores from the initial public testing dataset, and one will be dedicated for the scores from the hidden testing dataset which will be released on April 12th (Friday), 2024.</p>
+            <p>There will be two separate leaderboards on the <a href="https://www.codabench.org/competitions/2008/">Codabench competition page</a>. One will be dedicated for the scores from the initial public testing dataset, and one will be dedicated for the scores from the hidden testing dataset which will be released on April 12th (Friday), 2024.</p>
 
             <p>Initially, submissions will be scored on both discharge summary sections separately. Metric scores will be averaged across all samples in the testing set to compute several performance scores for each section (<i>not</i> reported on the leaderboards). Then, we will average each metric score of the two sections to get mean metric scores on both sections (reported under the metric name on the leaderboards). Finally, we will normalize the scores of each of the different metrics and average them to arrive at a final overall system score (reported as <code>Overall</code> on the leaderboards).</p>
             
