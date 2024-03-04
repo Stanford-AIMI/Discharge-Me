@@ -93,7 +93,7 @@
           <p>The dataset for this task is created from MIMIC-IV's submodules MIMIC-IV-Note [2] and MIMIC-IV-ED [3] and is available on PhysioNet [4]. In order to download the data, you <i>must</i> have a credentialed PhysioNet account. If you do not have an account, you can create one <a href="https://physionet.org/register/">here</a>. Information on the required CITI training and credntialing process is available <a href="https://physionet.org/about/citi-course/">here</a>.
           </p>
 
-          <p><b>The dataset for the "Discharge Me!" task is available on PhysioNet <a href="https://physionet.org/content/discharge-me/1.2/">here</a> (currently temporarily unavailable).</b></p>
+          <p><b>The dataset for the "Discharge Me!" task is available on PhysioNet <a href="https://physionet.org/content/discharge-me/1.2/">here</a>.</b></p>
 
           <h4>
             <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>2.1 Dataset Description</b></h4>
@@ -109,6 +109,12 @@
             <p>Discharge summaries are split into various sections and written under a variety of headings. However, each note in the dataset for this task includes a "Brief Hospital Course" and a "Discharge Instructions" section. The "Brief Hospital Course" section is usually located in the middle of the discharge summary following information about patient history and treatments received during the current admission. The "Discharge Instructions" section is generally located the end of the note as one of the last sections.</p>
 
             <p>Each admission is defined by a unique <code>hadm_id</code> and is associated with a corresponding discharge summary and <b><i>at least</i></b> one radiology report. Most admissions in the dataset will have only one corresponding ED stay. However, a select few admissions may have more than one ED stay (ie. multiple <code>stay_id</code>). Each <code>stay_id</code> can have multiple ICD diagnoses, but will only have one chief complaint. Participants may use online resources for descriptions and details about ICD codes.</p>
+
+            <blockquote>
+            <p><b>Please note that we decided to leave the entire discharge summary intact in the <code>text</code> field of the <code>discharge</code> table to allow for the most flexibility from participating teams. As such, teams will have to remove the target sections by simply masking out the corresponding text in <code>discharge_target</code> or via some other method, as the target sections (text that we aim to generate) should not be a model input.</b></p>
+            </blockquote>
+            
+            Please keep in mind the clinical workflows when deciding which other sections of the discharge summary to use during generation. Specifically, please only use sections that would be reasonably available to the clinicians at the time of writing the respective target sections. Notably, it would be acceptable to use the generated "Brief Hospital Course" as an input for the generation of the "Discharge Instructions", as it would have been available to the models/clinicians in a typical setting. Remember to justify your decisions in your system paper and/or submission description.
 
             <p style="color: #8C1515; padding-top: 20px;">Special Note:</p>            
             <p style="margin-top: -5px;">If you are using <code>pandas</code> to read the <code>.csv.gz</code> tables, please ensure you set <code>keep_default_na=False</code>. For instance:</p>
