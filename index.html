@@ -42,7 +42,7 @@
         <h3>
           <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>1. Task Overview</b></h3>
 
-          <p>Participants are given a dataset based on MIMIC-IV which includes 109,168 admissions from the Emergency Department (ED), split into training, validation, phase I testing, and phase II testing sets. Each admission includes chief complaints and diagnosis codes (either ICD-9 or ICD-10) documented by the ED, at least one radiology report, and a discharge summary with both "Brief Hospital Course" and "Discharge Instructions" sections. The goal is to generate these two critical sections in discharge summaries.</p>
+          <p>Participants are given a dataset based on MIMIC-IV which includes 109,168 visits to the Emergency Department (ED), split into training, validation, phase I testing, and phase II testing sets. Each visit includes chief complaints and diagnosis codes (either ICD-9 or ICD-10) documented by the ED, at least one radiology report, and a discharge summary with both "Brief Hospital Course" and "Discharge Instructions" sections. The goal is to generate these two critical sections in discharge summaries.</p>
 
           <p>
           <b>
@@ -106,9 +106,9 @@
 
             <p><b>Participants are free to use all or part of the provided dataset to develop their systems. However, submissions on Codabench will be evaluated on the entirety of the testing datasets.</b></p>
 
-            <p>Discharge summaries are split into various sections and written under a variety of headings. However, each note in the dataset for this task includes a "Brief Hospital Course" and a "Discharge Instructions" section. The "Brief Hospital Course" section is usually located in the middle of the discharge summary following information about patient history and treatments received during the current admission. The "Discharge Instructions" section is generally located the end of the note as one of the last sections.</p>
+            <p>Discharge summaries are split into various sections and written under a variety of headings. However, each note in the dataset for this task includes a "Brief Hospital Course" and a "Discharge Instructions" section. The "Brief Hospital Course" section is usually located in the middle of the discharge summary following information about patient history and treatments received during the current visit. The "Discharge Instructions" section is generally located the end of the note as one of the last sections.</p>
 
-            <p>Each admission is defined by a unique <code>hadm_id</code> and is associated with a corresponding discharge summary and <b><i>at least</i></b> one radiology report. Most admissions in the dataset will have only one corresponding ED stay. However, a select few admissions may have more than one ED stay (ie. multiple <code>stay_id</code>). Each <code>stay_id</code> can have multiple ICD diagnoses, but will only have one chief complaint. Participants may use online resources for descriptions and details about ICD codes.</p>
+            <p>Each visit is defined by a unique <code>hadm_id</code> and is associated with a corresponding discharge summary and <b><i>at least</i></b> one radiology report. Most visits in the dataset will have only one corresponding ED stay. However, a select few visits may have more than one ED stay (ie. multiple <code>stay_id</code>). Each <code>stay_id</code> can have multiple ICD diagnoses, but will only have one chief complaint. Participants may use online resources for descriptions and details about ICD codes.</p>
 
             <blockquote>
             <p><b>Please note that we decided to leave the entire discharge summary intact in the <code>text</code> field of the <code>discharge</code> table to allow for the most flexibility from participating teams. As such, teams will have to remove the target sections by simply masking out the corresponding text in <code>discharge_target</code> or via some other method, as the target sections (text that we aim to generate) should not be a model input.</b></p>
@@ -150,7 +150,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td class="tg-8zwo">Admissions</td>
+                  <td class="tg-8zwo">Visits</td>
                   <td class="tg-baqh">109,168</td>
                   <td class="tg-baqh">68,785</td>
                   <td class="tg-baqh">14,719</td>
