@@ -95,14 +95,12 @@
 
           <p><b>The dataset for the "Discharge Me!" task is available on PhysioNet <a href="https://physionet.org/content/discharge-me/1.2/">here</a>.</b></p>
 
+          <p><b>Alternatively, the notebook to process the raw MIMIC-IV files from PhysioNet to form the challenge dataset is available on Colab <a href="https://colab.research.google.com/drive/1yW-29KcDYoswMrqwjEMO6l6i2Ll3p5BX?usp=sharing">here</a>.</b></p>
+
           <h4>
             <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>2.1 Dataset Description</b></h4>
 
             <p>The dataset has been split into a training (68,785 samples), a validation (14,719 samples), a phase I testing (14,702 samples), and a phase II testing (10,962 samples) dataset. The phase II testing dataset will serve as the final test set that will be released on April 12th (Friday), 2024. All datasets and tables are derived from the MIMIC-IV submodules.</p>
-
-            <p>
-              The code to process the raw MIMIC-IV files from PhysioNet to form the challenge dataset is available on Colab <a href="https://colab.research.google.com/drive/1yW-29KcDYoswMrqwjEMO6l6i2Ll3p5BX?usp=sharing">here</a>.
-            </p>
 
             <p><b>Participants are free to use all or part of the provided dataset to develop their systems. However, submissions on Codabench will be evaluated on the entirety of the testing datasets.</b></p>
 
@@ -191,8 +189,6 @@
                 </tr>
               </tbody>
               </table>
-
-              <p style="padding-top: 20px;">Additionally, the mean length of the "Brief Hospital Course" section is approximately 326 words, and the mean length of the "Discharge Instructions" section is approximately 194 words, for the entire dataset.</p>
             
           <h4>
             <a id="user-content-header-2" class="anchor" href="#header-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>2.3 Dataset Schemas</b></h4>
@@ -201,6 +197,8 @@
           
           <h3>
             <a id="user-content-header-2" class="anchor" href="#evaluation" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>3. Evaluation Metrics</b></h3>
+
+            A hidden subset of 250 samples from the testing datasets of the respective phases will be used to evaluate the submissions.
 
             The metrics for this task are based on a combination of textual similarity and factual correctness of the generated text. Specifically, we will consider the following metrics:
               <ul>
@@ -212,9 +210,44 @@
                 <li>MEDCON [10]</li>
               </ul>
 
-            <p>Additionally, the submissions from the top-performing teams will be reviewed by clinicians at the end of the competition.</p>
+            <p>Additionally, the submissions from the top-performing teams will be reviewed by a team of clinicians at the end of the competition. Generated sections will be evaluated for their Completeness, Correctness, Readability, and Overall Comparison to the Reference Text. Specifically, the following criteria will be used:
+            
+            <ul>
+              <li><b>Completeness</b> (captures important information):
+                <ul>
+                  <li>Captures no important information (1)</li>
+                  <li>Captures less than 50% of the important information (2)</li>
+                  <li>Captures ~50% of the important information (3)</li>
+                  <li>Captures ~75% of the important information (only 1-2 key points are missing) (4)</li>
+                  <li>Captures all of the important information (5)</li>
+                </ul>
+              </li>
+              <li><b>Correctness</b> (contains less false information):
+                <ul>
+                  <li>Contains harmful content that will definitely impact future care (1)</li>
+                  <li>Contains incorrect content that is likely to impact future care (2)</li>
+                  <li>Contains incorrect content that may or may not impact future care (3)</li>
+                  <li>Contains incorrect content that will definitely not impact future care (4)</li>
+                  <li>Contains no incorrect content (5)</li>
+                </ul>
+              </li>
+              <li><b>Readability</b>:
+                <ul>
+                  <li>Significantly easier to read than the reference text (+1)</li>
+                  <li>Neither easier nor harder to read than the reference text (0)</li>
+                  <li>Significantly harder to read than the reference text (-1)</li>
+                </ul>
+              </li>
+              <li><b>Overall Comparison to the Reference Text</b>:
+                <ul>
+                  <li>Significantly better than the reference text (+1)</li>
+                  <li>Not significantly different from the reference text (0)</li>
+                  <li>Significantly worse than the reference text (-1)</li>
+                </ul>
+              </li>
+            </ul></p>
 
-            <p>There will be two separate leaderboards on the <a href="https://www.codabench.org/competitions/2008/">Codabench competition page</a>. One will be dedicated for the scores from the initial phase I testing dataset, and one will be dedicated for the scores from the phase II testing dataset which will be released on April 12th (Friday), 2024.</p>
+            <p>There will be two separate leaderboards on the <a href="https://www.codabench.org/competitions/2008/">Codabench competition page</a>. One will be dedicated for the scores from the initial phase I testing dataset, and one will be dedicated for the final scores from the phase II testing dataset which will be released on April 12th (Friday), 2024.</p>
 
             <p>Initially, submissions will be scored on both target sections separately. The mean across all test samples will be computed for each metric, resulting in several performance scores for each of the two target sections (not reported on the leaderboards). Then, for each metric, we will take the mean of the scores for each of the two target sections and report it under the metric name on the leaderboards. Finally, we will take the mean once again over all the metrics to arrive at a final overall system score (reported as Overall on the leaderboards). For instance, given <img src="https://latex.codecogs.com/svg.image?&space;N" title=" N" /> samples, suppose <img src="https://latex.codecogs.com/svg.image?&space;s" title=" s" /> is defined as the score for a given sample for a given metric, then the mean across all samples, <img src="https://latex.codecogs.com/svg.image?&space;S" title=" S" />, would be calculated by:</p>
 
