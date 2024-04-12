@@ -228,10 +228,11 @@ def compute_overall_score(scores):
     print("Done.")
     return leaderboard
 
-
+########################################################
 reference_dir = os.path.join("/app/input/", "ref")
 generated_dir = os.path.join("/app/input/", "res")
 score_dir = "/app/output/"
+########################################################
 
 print("Reading generated texts...")
 generated = pd.read_csv(
