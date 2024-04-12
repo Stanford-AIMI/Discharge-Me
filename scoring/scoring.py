@@ -96,8 +96,8 @@ def calculate_scores(generated, reference, metrics):
             )
             scores["meteor"]["discharge_instructions"].append(temp["meteor"])
             temp = meteorScorer.compute(
-                references=rows_ref["discharge_instructions"].tolist(),
-                predictions=rows_gen["discharge_instructions"].tolist(),
+                references=rows_ref["brief_hospital_course"].tolist(),
+                predictions=rows_gen["brief_hospital_course"].tolist(),
             )
             scores["meteor"]["brief_hospital_course"].append(temp["meteor"])
         if "align" in metrics:
