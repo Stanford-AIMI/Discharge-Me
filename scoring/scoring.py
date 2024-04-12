@@ -7,7 +7,9 @@ import evaluate
 
 from bleu import Bleu
 from rouge import Rouge
-from bertscore import BertScore  #
+from bertscore import BertScore
+from align import AlignScorer
+from UMLSScorer import UMLSScorer
 
 
 def calculate_scores(generated, reference, metrics):
@@ -24,8 +26,6 @@ def calculate_scores(generated, reference, metrics):
         bleuScorer = Bleu()
         print("bleuScorer initialized")
     if "rouge" in metrics:
-        scores["rouge"]["discharge_instructions"] = [[], [], []]
-        scores["rouge"]["brief_hospital_course"] = [[], [], []]
         rougeScorer = Rouge(["rouge1", "rouge2", "rougeL"])
         print("rougeScorer initialized")
     if "bertscore" in metrics:
@@ -34,6 +34,12 @@ def calculate_scores(generated, reference, metrics):
     if "meteor" in metrics:
         meteorScorer = evaluate.load("meteor")
         print("meteorScorer initialized")
+    if "align" in metrics:
+        alignScorer = AlignScorer()
+        print("alignScorer initialized")
+    if "medcon" in metrics:
+        medconScorer = UMLSScorer(quickumls_fp="/home/quickumls/")
+        print("medconScorer initialized")
 
     def calculate_scores(rows_ref, rows_gen):
         if "bleu" in metrics:
@@ -48,31 +54,29 @@ def calculate_scores(generated, reference, metrics):
             )
             scores["bleu"]["brief_hospital_course"].extend(temp)
         if "rouge" in metrics:
+            scores["rouge"]["discharge_instructions"] = []
             temp = rougeScorer(
                 refs=rows_ref["discharge_instructions"].tolist(),
                 hyps=rows_gen["discharge_instructions"].tolist(),
             )
-            scores["rouge"]["discharge_instructions"][0].extend(
-                    temp['rouge1'],
+            scores["rouge"]["discharge_instructions"].extend(
+                [
+                    temp["rouge1"],
+                    temp["rouge2"],
+                    temp["rougeL"],
+                ]
             )
-            scores["rouge"]["discharge_instructions"][1].extend(
-                    temp['rouge2'],
-            )
-            scores["rouge"]["discharge_instructions"][2].extend(
-                    temp['rougeL'],
-            )
+            scores["rouge"]["brief_hospital_course"] = []
             temp = rougeScorer(
                 refs=rows_ref["brief_hospital_course"].tolist(),
                 hyps=rows_gen["brief_hospital_course"].tolist(),
             )
-            scores["rouge"]["brief_hospital_course"][0].extend(
-                    temp['rouge1'],
-            )
-            scores["rouge"]["brief_hospital_course"][1].extend(
-                    temp['rouge2'],
-            )
-            scores["rouge"]["brief_hospital_course"][2].extend(
-                    temp['rougeL'],
+            scores["rouge"]["brief_hospital_course"].extend(
+                [
+                    temp["rouge1"],
+                    temp["rouge2"],
+                    temp["rougeL"],
+                ]
             )
         if "bertscore" in metrics:
             temp = bertScorer(
@@ -96,22 +100,44 @@ def calculate_scores(generated, reference, metrics):
                 predictions=rows_gen["discharge_instructions"].tolist(),
             )
             scores["meteor"]["brief_hospital_course"].append(temp["meteor"])
+        if "align" in metrics:
+            temp = alignScorer(
+                refs=rows_ref["discharge_instructions"].tolist(),
+                hyps=rows_gen["discharge_instructions"].tolist(),
+            )
+            scores["align"]["discharge_instructions"].extend(temp)
+            temp = alignScorer(
+                refs=rows_ref["brief_hospital_course"].tolist(),
+                hyps=rows_gen["brief_hospital_course"].tolist(),
+            )
+            scores["align"]["brief_hospital_course"].extend(temp)
+        if "medcon" in metrics:
+            temp = medconScorer(
+                rows_ref["discharge_instructions"].tolist(),
+                rows_gen["discharge_instructions"].tolist(),
+            )
+            scores["medcon"]["discharge_instructions"].extend(temp)
+            temp = medconScorer(
+                rows_ref["brief_hospital_course"].tolist(),
+                rows_gen["brief_hospital_course"].tolist(),
+            )
+            scores["medcon"]["brief_hospital_course"].extend(temp)
 
         # print progress
-        current_row = i + 128
-        if current_row % 128 == 0:
-            print(f"Processed {current_row}/{len(generated)} samples.", flush=True)
+        print(f"Processed {i + len(rows_ref)}/{len(generated)} samples.", flush=True)
 
     reference.set_index("hadm_id", drop=False, inplace=True)
     generated.set_index("hadm_id", drop=False, inplace=True)
 
-    batch_size = 128
+    batch_size = 8
     for i in range(0, len(generated), batch_size):
+        if i + batch_size > len(generated):
+            batch_size = len(generated) - i
         rows_ref = reference[i : i + batch_size]
         rows_gen = generated[i : i + batch_size]
         calculate_scores(rows_ref=rows_ref, rows_gen=rows_gen)
 
-    print(f"Processed {len(generated)}/{len(generated)} samples.", flush=True)
+    print(f"Processed {len(generated)} samples.", flush=True)
     print("Done.")
     return scores
 
@@ -177,11 +203,24 @@ def compute_overall_score(scores):
         leaderboard["meteor"] = np.mean(
             [meteor_discharge_instructions, meteor_brief_hospital_course]
         )
-
-    # normalize sacrebleu to be between 0 and 1
-    for key in leaderboard.keys():
-        if key == "sacrebleu":
-            leaderboard[key] = leaderboard[key] / 100
+    if "align" in metrics:
+        align_discharge_instructions = np.mean(
+            scores["align"]["discharge_instructions"]
+        )
+        align_brief_hospital_course = np.mean(scores["align"]["brief_hospital_course"])
+        leaderboard["align"] = np.mean(
+            [align_discharge_instructions, align_brief_hospital_course]
+        )
+    if "medcon" in metrics:
+        medcon_discharge_instructions = np.mean(
+            scores["medcon"]["discharge_instructions"]
+        )
+        medcon_brief_hospital_course = np.mean(
+            scores["medcon"]["brief_hospital_course"]
+        )
+        leaderboard["medcon"] = np.mean(
+            [medcon_discharge_instructions, medcon_brief_hospital_course]
+        )
 
     overall_score = np.mean(list(leaderboard.values()))
     leaderboard["overall"] = overall_score
@@ -199,7 +238,7 @@ generated = pd.read_csv(
     os.path.join(generated_dir, "submission.csv"), keep_default_na=False
 )
 reference = pd.read_csv(
-    os.path.join(reference_dir, "discharge_target.csv"), keep_default_na=False
+    os.path.join(reference_dir, "discharge_target_final.csv"), keep_default_na=False
 )
 
 # covert all elements to string
@@ -228,23 +267,29 @@ reference["brief_hospital_course"] = reference["brief_hospital_course"].str.repl
 generated["hadm_id"] = generated["hadm_id"].astype(int)
 reference["hadm_id"] = reference["hadm_id"].astype(int)
 
+# get the list of hadm_ids from the reference
+ref_hadm_ids = list(reference["hadm_id"].unique())
+
+# filter the generated texts to only include hadm_ids from the reference
+generated = generated[generated["hadm_id"].isin(ref_hadm_ids)]
+
 # check for invalid submissions
 if not generated.shape[0] == reference.shape[0]:
     raise ValueError(
         "Submission does not contain the correct number of rows. Please check your submission file."
     )
 
-if list(generated["hadm_id"].unique()) != list(reference["hadm_id"].unique()):
+if set(generated["hadm_id"].unique()) != set(reference["hadm_id"].unique()):
     missing_hadm_ids = set(reference["hadm_id"].unique()) - set(
         generated["hadm_id"].unique()
     )
     extra_hadm_ids = set(generated["hadm_id"].unique()) - set(
         reference["hadm_id"].unique()
     )
-    print(f"Missing hadm_ids: {missing_hadm_ids}")
-    print(f"Extra hadm_ids: {extra_hadm_ids}")
+    # print(f"Missing hadm_ids: {missing_hadm_ids}")
+    # print(f"Extra hadm_ids: {extra_hadm_ids}")
     raise ValueError(
-        "Submission does not contain all hadm_ids from the test set. Please check your submission file."
+        "Submission does not contain all hadm_ids from the test set. Please check your submission file to ensure all 10,962 samples are present."
     )
 
 if not generated["hadm_id"].nunique() == len(generated):
@@ -257,9 +302,7 @@ reference = reference.sort_values(by="hadm_id")
 print("Done.")
 
 scores = calculate_scores(
-    generated,
-    reference,
-    metrics=["bleu", "rouge", "bertscore", "meteor"],
+    generated, reference, metrics=["bleu", "rouge", "bertscore", "meteor", "align", "medcon"]
 )
 
 leaderboard = compute_overall_score(scores)
