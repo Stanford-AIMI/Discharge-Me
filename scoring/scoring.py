@@ -228,18 +228,21 @@ def compute_overall_score(scores):
     print("Done.")
     return leaderboard
 
-########################################################
+#################################################################################################
+# specify the directories for your submission.csv and the discharge_target.csv
 reference_dir = os.path.join("/app/input/", "ref")
 generated_dir = os.path.join("/app/input/", "res")
+
+# specify the directory where the scores.json file will be saved
 score_dir = "/app/output/"
-########################################################
+#################################################################################################
 
 print("Reading generated texts...")
 generated = pd.read_csv(
     os.path.join(generated_dir, "submission.csv"), keep_default_na=False
 )
 reference = pd.read_csv(
-    os.path.join(reference_dir, "discharge_target_final.csv"), keep_default_na=False
+    os.path.join(reference_dir, "discharge_target.csv"), keep_default_na=False
 )
 
 # covert all elements to string
