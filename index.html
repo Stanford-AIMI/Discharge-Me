@@ -32,6 +32,10 @@
     </section>
 
     <section class="main-content">
+      <blockquote>
+        <p>(Update May 12, 2024): Thank you for everyone's participation in Discharge Me! The final leaderboard is available <a href="https://docs.google.com/spreadsheets/d/1idtYUQv4Npr142mEDQngZ8fNLwO9xOblC7Pjzli6fx4/edit?usp=sharing">here.</p>
+        </blockquote>
+
       <h2>
         <a id="user-content-header-1" class="anchor" href="#header-1" aria-hidden="true"><span class="octicon octicon-link"></span></a><b>Generating Discharge Summary Sections</b></h2>
   
@@ -210,15 +214,15 @@
                 <li>MEDCON [10]</li>
               </ul>
 
-            <p>Additionally, the submissions from the top-performing teams will be reviewed by a team of clinicians at the end of the competition. Generated sections will be evaluated for their Completeness, Correctness, Readability, and Overall Comparison to the Reference Text. Specifically, the following criteria will be used:
+            <p>Additionally, the submissions from the top-6 scoring teams will be reviewed by a team of clinicians at the end of the competition. Generated sections will be evaluated for their Completeness, Correctness, Readability, and Overall Comparison to the Reference Text. Specifically, the following criteria will be used (scored from 1 to 5):
             
             <ul>
               <li><b>Completeness</b> (captures important information):
                 <ul>
                   <li>Captures no important information (1)</li>
-                  <li>Captures less than 50% of the important information (2)</li>
+                  <li>Captures ~25% of the important information (2)</li>
                   <li>Captures ~50% of the important information (3)</li>
-                  <li>Captures ~75% of the important information (only 1-2 key points are missing) (4)</li>
+                  <li>Captures ~75% of the important information (4)</li>
                   <li>Captures all of the important information (5)</li>
                 </ul>
               </li>
@@ -227,22 +231,26 @@
                   <li>Contains harmful content that will definitely impact future care (1)</li>
                   <li>Contains incorrect content that is likely to impact future care (2)</li>
                   <li>Contains incorrect content that may or may not impact future care (3)</li>
-                  <li>Contains incorrect content that will definitely not impact future care (4)</li>
+                  <li>Contains incorrect content that will not impact future care (4)</li>
                   <li>Contains no incorrect content (5)</li>
                 </ul>
               </li>
               <li><b>Readability</b>:
                 <ul>
-                  <li>Significantly easier to read than the reference text (+1)</li>
-                  <li>Neither easier nor harder to read than the reference text (0)</li>
-                  <li>Significantly harder to read than the reference text (-1)</li>
+                  <li>Significantly harder to read than the reference text (1)</li>
+                  <li>Slightly harder to read than the reference text (2)</li>
+                  <li>Neither easier nor harder to read than the reference text (3)</li>
+                  <li>Slightly easier to read than the reference text (4)</li>
+                  <li>Significantly easier to read than the reference text (5)</li>
                 </ul>
               </li>
               <li><b>Overall Comparison to the Reference Text</b>:
                 <ul>
-                  <li>Significantly better than the reference text (+1)</li>
-                  <li>Not significantly different from the reference text (0)</li>
-                  <li>Significantly worse than the reference text (-1)</li>
+                  <li>Significantly worse than the reference text (1)</li>
+                  <li>Slightly worse than the reference text (2)</li>
+                  <li>Neither better nor worse than the reference text (3)</li>
+                  <li>Slightly better than the reference text (4)</li>
+                  <li>Significantly better than the reference text (5)</li>
                 </ul>
               </li>
             </ul></p>
